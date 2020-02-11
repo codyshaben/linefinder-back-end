@@ -39,10 +39,10 @@ app.use('/trails', trails)
 //   res.render('error');
 // });
 
-// const PORT = process.env.PORT || 9000
-// app.listen(PORT, () => {
-//     console.log(`Listening on port ${PORT}`)
-// })
+const PORT = process.env.PORT || 9000
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
+})
 
 
 module.exports = app;
