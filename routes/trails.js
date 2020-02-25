@@ -1,59 +1,78 @@
 const express = require('express');
 const router = express.Router();
-const fetch = require('node-fetch');
 require('dotenv').config()
+const queries = require('../db/queries')
 
+router.get('/', (req, res) => {
+    queries.getTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
-router.get('/', async (req, res) => {
-    const rei_api_url = `https://www.powderproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=1000&maxResults=500&key=${process.env.REI_API_KEY}`;
-    const fetch_response = await fetch(rei_api_url);
-    const json = await fetch_response.json()
-    res.json(json)
-})
+router.get('/five-star', (req, res) => {
+    queries.getFiveStarTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
-router.get('/one-star', async (req, res) => {
-    const rei_api_url = `https://www.powderproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=1000&maxResults=500&key=${process.env.REI_API_KEY}`;
-    const fetch_response = await fetch(rei_api_url);
-    const json = await fetch_response.json()
-    res.json(json.trails.filter(trail => {
-        return trail.stars < 2
-    }))
-})
+router.get('/four-star', (req, res) => {
+    queries.getFourStarTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
-router.get('/two-stars', async (req, res) => {
-    const rei_api_url = `https://www.powderproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=1000&maxResults=500&key=${process.env.REI_API_KEY}`;
-    const fetch_response = await fetch(rei_api_url);
-    const json = await fetch_response.json()
-    res.json(json.trails.filter(trail => {
-        return trail.stars < 3
-    }))
-})
+router.get('/three-star', (req, res) => {
+    queries.getThreeStarTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
-router.get('/three-stars', async (req, res) => {
-    const rei_api_url = `https://www.powderproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=1000&maxResults=500&key=${process.env.REI_API_KEY}`;
-    const fetch_response = await fetch(rei_api_url);
-    const json = await fetch_response.json()
-    res.json(json.trails.filter(trail => {
-        return trail.stars < 4 && trail.stars > 3
-    }))
-})
+router.get('/two-star', (req, res) => {
+    queries.getTwoStarTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
-router.get('/four-stars', async (req, res) => {
-    const rei_api_url = `https://www.powderproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=1000&maxResults=500&key=${process.env.REI_API_KEY}`;
-    const fetch_response = await fetch(rei_api_url);
-    const json = await fetch_response.json()
-    res.json(json.trails.filter(trail => {
-        return trail.stars < 5 && trail.stars > 4
-    }))
-})
+router.get('/one-star', (req, res) => {
+    queries.getOneStarTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
-router.get('/five-stars', async (req, res) => {
-    const rei_api_url = `https://www.powderproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=1000&maxResults=500&key=${process.env.REI_API_KEY}`;
-    const fetch_response = await fetch(rei_api_url);
-    const json = await fetch_response.json()
-    res.json(json.trails.filter(trail => {
-        return trail.stars === 5
-    }))
-})
+router.get('/double-black', (req, res) => {
+    queries.getDoubleBlackTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
+
+router.get('/black', (req, res) => {
+    queries.getBlackTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
+
+router.get('/blue-black', (req, res) => {
+    queries.getBlueBlackTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
+
+router.get('/blue', (req, res) => {
+    queries.getBlueTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
+
+router.get('/greenBlue', (req, res) => {
+    queries.getGreenBlueTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
+
+router.get('/green', (req, res) => {
+    queries.getGreenTrails().then(trail => {
+      res.json({data:trail});
+    })
+});
 
 module.exports = router
