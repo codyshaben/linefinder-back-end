@@ -28,6 +28,9 @@ module.exports = {
   getBlackTrails: function() {
     return knex('trail').where('difficulty', 'black')
   },
+  getBlueBlackTrails: function() {
+    return knex('trail').where('difficulty', 'blueBlack')
+  },
   getBlueTrails: function() {
     return knex('trail').where('difficulty', 'blue')
   },
