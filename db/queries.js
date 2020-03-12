@@ -1,8 +1,16 @@
 var knex = require('./knex')
+const bcrypt = require('bcrypt');
+
 
 module.exports = {
   getUsers: function() {
-    return knex('users').select()
+    return knex('user').select()
+  },
+  createUser: function(user) {
+    return knex('user').insert(user, '*')
+  },
+  getUserById: function(id) {
+    return knex('user').select().where('id', id)
   },
   getTrails: function() {
     return knex('trail').select()
@@ -28,8 +36,8 @@ module.exports = {
   getBlackTrails: function() {
     return knex('trail').where('difficulty', 'black')
   },
-  getBlueBlackTrails: function() {
-    return knex('trail').where('difficulty', 'blueBlack')
+    getBlueTrails: function() {
+    return knex('trail').where('difficulty', 'blue')
   },
   getBlueTrails: function() {
     return knex('trail').where('difficulty', 'blue')
