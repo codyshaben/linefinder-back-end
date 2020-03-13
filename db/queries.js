@@ -9,8 +9,8 @@ module.exports = {
   createUser: function(user) {
     return knex('user').insert(user, '*')
   },
-  getUserById: function(id) {
-    return knex('user').select().where('id', id)
+  getUserByEmail: function(email) {
+    return knex('user').select().where('email', email)
   },
   getTrails: function() {
     return knex('trail').select()
