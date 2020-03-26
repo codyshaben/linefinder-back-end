@@ -4,10 +4,16 @@ const knex = require('../db/knex');
 const bcrypt = require('bcrypt');
 const queries = require('../db/queries')
 const jwt = require('jsonwebtoken');
-// const { check } = require('express-validator')
+const { check, validationResult } = require('express-validator')
 require('dotenv').config();
 
-router.post('/signup', (req, res) => {
+const validationRules = [
+    check('password').isLength({ min: 6 }),
+    check('first_name').isAlpha(),
+    check('last_name').isAlpha(),
+]
+
+router.post('/signup', validationRules, (req, res) => {
     const saltRounds = 10;
     let password = req.body.password
 
@@ -18,9 +24,7 @@ router.post('/signup', (req, res) => {
             } else {
                 req.body.password = hash
                 queries.createUser(req.body)
-                .then(user => {
-                    res.json(user[0])
-                })
+                .then(user => res.json(user[0]))
             }
         })
     })
@@ -35,7 +39,9 @@ router.post('/login', (req, res) => {
         const hash = user[0].password
         bcrypt.compare(password, hash, function(err, result) {
             if (result === true) {
-                res.json({message: 'Login successful'})
+                jwt.sign({ user }, 'secretKey', (err, token) => {
+                    res.json({ token , message: 'Login successful'})
+                })
             } else {
                 res.json({error: 'Incorrect password'})
             }

@@ -1,52 +1,48 @@
-var knex = require('./knex')
-const bcrypt = require('bcrypt');
-
+const knex = require('../db/knex')
+const User = require('../models/User')
+const Trail = require('../models/Trail')
 
 module.exports = {
-  getUsers: function() {
-    return knex('user').select()
-  },
-  createUser: function(user) {
-    return knex('user').insert(user, '*')
-  },
-  getUserByEmail: function(email) {
-    return knex('user').select().where('email', email)
-  },
-  getTrails: function() {
-    return knex('trail').select()
-  },
-  getFiveStarTrails: function() {
-    return knex('trail').where('stars', 5)
-  },
-  getFourStarTrails: function() {
-    return knex('trail').whereBetween('stars', [4, 4.9])
-  },
-  getThreeStarTrails: function() {
-    return knex('trail').whereBetween('stars', [3, 3.9])
-  },
-  getTwoStarTrails: function() {
-    return knex('trail').whereBetween('stars', [2, 2.9])
-  },
-  getOneStarTrails: function() {
-    return knex('trail').whereBetween('stars', [1, 1.9])
-  },
-  getDoubleBlackTrails: function() {
-    return knex('trail').where('difficulty', 'dblack')
-  },
-  getBlackTrails: function() {
-    return knex('trail').where('difficulty', 'black')
-  },
-    getBlueTrails: function() {
-    return knex('trail').where('difficulty', 'blue')
-  },
-  getBlueTrails: function() {
-    return knex('trail').where('difficulty', 'blue')
-  },
-  getGreenBlueTrails: function() {
-    return knex('trail').where('difficulty', 'greenBlue')
-  },
-  getGreenTrails: function() {
-    return knex('trail').where('difficulty', 'green')
-  }
+  getUsers: () =>  User.query(),
 
+  createUser: (user) => User.query().insert(user),
+
+  getUserById: (id) => User
+    .query()
+    .findById(id)
+    .withGraphFetched('trails'),
+
+  addUserTrails: (user_trails) => knex('user_trails').insert(user_trails, '*'),
+  
+  getTrails: () => Trail.query(),
+
+  getFiveStarTrails: () => Trail.query().where('stars', 5),
+
+  getFourStarTrails: () => Trail.query()
+    .where('stars', '<', '4.9')
+    .where('stars', '>', '3.9')
+    .orderBy('stars', 'desc'),
+
+  getThreeStarTrails: () => Trail.query()
+    .where('stars', '<', '3.9')
+    .where('stars', '>', '2.9')
+    .orderBy('stars', 'desc'),
+
+  getTwoStarTrails: () => Trail.query()
+    .where('stars', '<', '2.9')
+    .where('stars', '>', '1.9')
+    .orderBy('stars', 'desc'),
+
+  getOneStarTrails: () => Trail.query()
+    .where('stars', '<', '1.9')
+    .where('stars', '>', '0.9')
+    .orderBy('stars', 'desc'),
+
+  getDoubleBlackTrails: () => Trail.query().where('difficulty', 'dblack'),
+
+  getBlackTrails: () => Trail.query().where('difficulty', 'black'),
+
+  getBlueTrails: () => Trail.query().where('difficulty', 'blue'),
+
+  getGreenTrails: () => Trail.query().where('difficulty', 'green'),
 }

@@ -10,6 +10,7 @@ const app = express();
 const users = require('./routes/users')
 const trails = require('./routes/trails')
 const auth = require('./routes/auth')
+const userTrails = require('./routes/user_trails')
 
 
 app.use(logger('dev'));
@@ -21,6 +22,7 @@ app.use(cors())
 
 app.use('/users', users)
 app.use('/trails', trails)
+app.use('/user_trails', userTrails)
 app.use('/auth', auth)
 
 
@@ -41,10 +43,10 @@ app.use('/auth', auth)
 //   res.render('error');
 // });
 
-// const PORT = process.env.PORT || 9000
-// app.listen(PORT, () => {
-//     console.log(`Listening on port ${PORT}`)
-// })
+const PORT = process.env.PORT || 9000
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
+})
 
 
 module.exports = app;

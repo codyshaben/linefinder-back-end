@@ -1,26 +1,26 @@
 const { Model } = require('objection')
 
 class User extends Model {
-    static get tableName() {
-        return 'user'
-    }
+    static tableName = 'user'
+
     static get relationMappings() {
-        const { Trail } = require('./trail')
+        const Trail = require('./Trail')
+
         return {
             trails: {
                 relation: Model.ManyToManyRelation,
                 modelClass: Trail,
                 join: {
-                    from: 'user.id',
+                    from: 'user.email',
                     through: {
-                        from: 'user_trails.trail_id',
-                        to: 'user_trails.user_id'
+                        from: 'user_trails.userEmail',
+                        to: 'user_trails.trailId'
                     },
-                    to: 'trail.id'
+                    to: 'trail.trail_id'
                 }
             }
-        }
+        }   
     }
 }
 
-module.exports = { User }
+module.exports = User 
