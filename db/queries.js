@@ -7,9 +7,9 @@ module.exports = {
 
   createUser: (user) => User.query().insert(user),
 
-  getUserById: (id) => User
+  getUserByEmail: (email) => User
     .query()
-    .findById(id)
+    .where('email', email)
     .withGraphFetched('trails'),
 
   addUserTrails: (user_trails) => knex('user_trails').insert(user_trails, '*'),

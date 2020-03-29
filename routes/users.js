@@ -9,14 +9,8 @@ router.get('/', async (req, res) => {
 });
 
 //route we want to protect for users
-router.get('/:id', (req, res) => {
-  queries.getUserById(req.params.id).then(user => {
-    res.json({data:user});
-  })
-});
-
-router.get('/:id/trails', (req, res) => {
-  queries.getUserTrails(req.params.id).then(user => {
+router.get('/:email', (req, res) => {
+  queries.getUserByEmail(req.params.email).then(user => {
     res.json({data:user});
   })
 });
