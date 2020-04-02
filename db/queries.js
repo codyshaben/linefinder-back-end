@@ -5,11 +5,14 @@ const Trail = require('../models/Trail')
 module.exports = {
   getUsers: () =>  User.query(),
 
-  createUser: (user) => User.query().insert(user),
+  createUser: (user) => User.query().insert(user, 'id').then(ids => {
+    return ids[0];
+  }),
 
-  getUserByEmail: (email) => User
+  getUserById: (id) => User
     .query()
-    .where('email', email)
+    .where('id', id)
+    .first()
     .withGraphFetched('trails'),
 
   addUserTrails: (user_trails) => knex('user_trails').insert(user_trails, '*'),

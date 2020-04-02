@@ -1,5 +1,5 @@
 const express = require('express');
-const queries = require('../db/queries')
+const User = require('../db/user')
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -9,10 +9,11 @@ router.get('/', async (req, res) => {
 });
 
 //route we want to protect for users
-router.get('/:email', (req, res) => {
-  queries.getUserByEmail(req.params.email).then(user => {
+router.get('/:id', (req, res) => {
+  User.getUserById(req.params.id).then(user => {
     res.json({data:user});
   })
 });
+
 
 module.exports = router;

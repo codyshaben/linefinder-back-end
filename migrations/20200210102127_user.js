@@ -6,7 +6,7 @@ exports.up = function(knex) {
       table.text('last_name').notNullable();
       table.text('email').unique().notNullable();
       table.text('password').notNullable();
-      table.timestamp('created_at');
+      table.datetime('created_at');
   })
 };
 
