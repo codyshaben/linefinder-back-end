@@ -1,4 +1,3 @@
-
 exports.up = function(knex) {
     return knex.schema.createTable('user_trails', table => {
         table.increments('id').primary();

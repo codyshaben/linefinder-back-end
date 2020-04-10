@@ -1,11 +1,15 @@
 const knex = require('./knex')
 const User = require('../models/User')
-const Trail = require('../models/Trail')
+// const Trail = require('../models/Trail')
+const UserTrails = require('../models/UserTrails')
 
 module.exports = {
-    getUsers: () =>  User.query(),
+    getUsers: () =>  User.query().withGraphFetched('trails'),
 
-    create: (user) => User.query().insert(user, 'id').then(user => user.id),
+    create: (user) => User
+        .query()
+        .insert(user, 'id')
+        .then(user => user.id),
 
     getUserByEmail: (email) => User
         .query()
@@ -17,5 +21,10 @@ module.exports = {
         .query()
         .where('id', id)
         .first()
-        .withGraphFetched('trails')
+        .withGraphFetched('trails'),
+    
+    addUserTrails: (user_trails) => UserTrails
+        .query()
+        .insert(user_trails, 'id')
+        .then(user_trails => user_trails.id)
 }

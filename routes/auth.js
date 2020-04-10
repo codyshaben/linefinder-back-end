@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const User = require('../db/user')
+const User = require('../db/user');
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
@@ -14,14 +14,13 @@ function validUser(user)  {
                         user.password.trim() != '';
                         user.password.trim().length >= 6;
     return validEmail && validPassword;
-}
+};
 
 router.post('/signup', (req, res, next) => {
     if(validUser(req.body)) {
         User
             .getUserByEmail(req.body.email)
             .then(user => {
-                console.log('user', user)
                 if(!user) {
                     bcrypt.hash(req.body.password, 10)
                         .then((hash) => {
@@ -31,7 +30,7 @@ router.post('/signup', (req, res, next) => {
                                 email: req.body.email,
                                 password: hash,
                                 created_at: new Date()
-                            }
+                            };
                             User
                                 .create(user)
                                 .then(id => {
@@ -42,18 +41,17 @@ router.post('/signup', (req, res, next) => {
                                             id,
                                             token,
                                             message: 'ok'
-                                        })
+                                        });
                                     });
                                 });
                         });
                 } else {
-                   next(new Error('Email in use')) 
-                }  
+                   next(new Error('Email in use'));
+                };  
             });
     } else {
-        next(new Error('Invalid user'))
-    }
-    
+        next(new Error('Invalid user'));
+    };
 });
 
 router.post('/login', (req, res, next) => {
@@ -74,33 +72,19 @@ router.post('/login', (req, res, next) => {
                                         id: user.id,
                                         token,
                                         message: 'ok'
-                                    })
-                                })
+                                    });
+                                });
                             } else {
-                                next(new Error('Invalid login'))
-                            }
-                        })
+                                next(new Error('Invalid login'));
+                            };
+                        });
                 } else {
-                    next(new Error('Invalid login'))
-                }
-            })
+                    next(new Error('Invalid login'));
+                };
+            });
     } else {
-        next(new Error('Invalid login'))
-    }
-
-    // User.getUserByEmail(email)
-    // .then(user => {
-    //     const hash = user[0].password
-    //     bcrypt.compare(password, hash, function(err, result) {
-    //         if (result === true) {
-    //             jwt.sign({ user }, 'secretKey', (err, token) => {
-    //                 res.json({ token , message: 'Login successful'})
-    //             })
-    //         } else {
-    //             res.json({error: 'Incorrect password'})
-    //         }
-    //     });
-    // });
+        next(new Error('Invalid login'));
+    };
 });
 
 module.exports = router;

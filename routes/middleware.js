@@ -10,7 +10,6 @@ const checkTokenSetUser = (req, res, next) => {
            if (err) {
                next()
            } else {
-               console.log(decoded)
                req.user = decoded
                next()
            }
@@ -21,8 +20,6 @@ const checkTokenSetUser = (req, res, next) => {
 }
 
 const isLoggedIn = (req, res, next) => {
-    console.log(req.user)
-
     if(req.user) {
         next()
     } else {
@@ -32,6 +29,7 @@ const isLoggedIn = (req, res, next) => {
 }
 
 const allowAccess = (req, res, next) => {
+    console.log('request', req.user)
     if (req.user.id == req.params.id) {
         next()
     } else {

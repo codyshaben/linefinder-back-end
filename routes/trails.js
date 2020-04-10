@@ -1,76 +1,76 @@
 const express = require('express');
 const router = express.Router();
 require('dotenv').config()
-const queries = require('../db/queries')
+const Trail = require('../db/trail')
 
 router.get('/', (req, res) => {
-    queries.getTrails().then(trail => {
+    Trail.getTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/five-star', (req, res) => {
-    queries.getFiveStarTrails().then(trail => {
+    Trail.getFiveStarTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/four-star', (req, res) => {
-    queries.getFourStarTrails().then(trail => {
+    Trail.getFourStarTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/three-star', (req, res) => {
-    queries.getThreeStarTrails().then(trail => {
+    Trail.getThreeStarTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/two-star', (req, res) => {
-    queries.getTwoStarTrails().then(trail => {
+    Trail.getTwoStarTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/one-star', (req, res) => {
-    queries.getOneStarTrails().then(trail => {
+    Trail.getOneStarTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/double-black', (req, res) => {
-    queries.getDoubleBlackTrails().then(trail => {
+    Trail.getDoubleBlackTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/black', (req, res) => {
-    queries.getBlackTrails().then(trail => {
+    Trail.getBlackTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/blue-black', (req, res) => {
-    queries.getBlueBlackTrails().then(trail => {
+    Trail.getBlueBlackTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/blue', (req, res) => {
-    queries.getBlueTrails().then(trail => {
+    Trail.getBlueTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/greenBlue', (req, res) => {
-    queries.getGreenBlueTrails().then(trail => {
+    Trail.getGreenBlueTrails().then(trail => {
       res.json({data:trail});
     })
 });
 
 router.get('/green', (req, res) => {
-    queries.getGreenTrails().then(trail => {
+    Trail.getGreenTrails().then(trail => {
       res.json({data:trail});
     })
 });
