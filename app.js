@@ -1,18 +1,17 @@
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
 
-const users = require('./routes/users')
-const trails = require('./routes/trails')
-const auth = require('./routes/auth')
-const userTrails = require('./routes/user_trails')
-const authMiddleware = require('./routes/middleware')
-
-console.log(process.env.COOKIE_SECRET)
+const users = require('./routes/users');
+const trails = require('./routes/trails');
+const auth = require('./routes/auth');
+const userTrails = require('./routes/user_trails');
+const authMiddleware = require('./routes/middleware');
+const twilio = require('./routes/twilio');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -22,15 +21,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   credentials: true,
   origin: 'http://localhost:3001',
-}))
+}));
 
-app.use(authMiddleware.checkTokenSetUser)
-app.use('/users', authMiddleware.isLoggedIn, users)
-app.use('/trails', trails)
-app.use('/user_trails', userTrails)
-app.use('/auth', auth)
-
-
+app.use(authMiddleware.checkTokenSetUser);
+app.use('/users', authMiddleware.isLoggedIn, users);
+app.use('/trails', trails);
+app.use('/user_trails', userTrails);
+app.use('/auth', auth);
+app.use('/twilio', twilio);
 
 // // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,13 +44,12 @@ app.use(function(err, req, res, next) {
   res.json({
       message: err.message,
       error: req.app.get('env') === 'development' ? err : {}
-  })
+  });
 });
 
 const PORT = process.env.PORT || 9000
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
-})
-
+});
 
 module.exports = app;

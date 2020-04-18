@@ -11,6 +11,8 @@ router.get('/', (req, res) => {
   });
 
 router.post('/:id',  authMiddleware.allowAccess, (req, res) => {
+  console.log('body', req.body)
+  console.log('params', req.params)
     User.addUserTrails(req.body)
       .then(user_trail => {
           res.json({data:user_trail})
