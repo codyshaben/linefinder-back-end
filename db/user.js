@@ -26,5 +26,6 @@ module.exports = {
     addUserTrails: (user_trails) => UserTrails
         .query()
         .insert(user_trails, 'id')
-        .then(user_trails => user_trails.id)
+        .then(user_trails => user_trails.id),
+
 }

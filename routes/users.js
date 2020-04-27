@@ -25,6 +25,22 @@ router.get('/:id', authMiddleware.allowAccess, (req, res) => {
   }
 });
 
+// , authMiddleware.allowAccess
+router.delete('/:id', (req, res) => {
+  // console.log(req.params)
+  if(!isNaN(req.params.id)) {
+    User.getUserById(req.params.id).then(user => {
+      if (user) {
+        user.trails.map(trail => console.log(trail))
+        // res.json({data:user});
+      } else {
+        resError(res, 404, 'User not found')
+      }
+    })
+  } else {
+    resError(res, 500, 'Invalid ID')
+  }
+})
 // router.get('/:id/mytrails', authMiddleware.allowAccess, (req, res) => {
 //   if(!isNaN(req.params.id)) {
 //     User.getUserById(req.params.id).then(user => {
