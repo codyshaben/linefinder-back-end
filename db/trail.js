@@ -35,4 +35,5 @@ module.exports = {
   getBlueTrails: () => Trail.query().where('difficulty', 'blue'),
 
   getGreenTrails: () => Trail.query().where('difficulty', 'green'),
+
 }

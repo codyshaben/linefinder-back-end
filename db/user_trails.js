@@ -5,13 +5,17 @@ const UserTrails = require('../models/UserTrails')
 module.exports = {
     getUserTrails: () => UserTrails.query(),
 
-    addUserTrails: (user_trail) => UserTrails
+    getUserTrailsByUserId: (id) => UserTrails
         .query()
-        .insert(user_trail, 'id')
-        .then(user_trail => user_trail.id),
+        .where('userId', id),
+
+    addUserTrails: (userTrail) => UserTrails
+        .query()
+        .insert(userTrail)
+        .then(userTrail => userTrail.id),
 
     deleteUserTrails: (id) => UserTrails
         .query()
         .delete()
-        .where('id', id)
+        .where('trailId', id)
 }

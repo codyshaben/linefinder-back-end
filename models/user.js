@@ -11,9 +11,9 @@ class User extends Model {
                 relation: Model.ManyToManyRelation,
                 modelClass: Trail,
                 join: {
-                    from: 'user.email',
+                    from: 'user.id',
                     through: {
-                        from: 'user_trails.userEmail',
+                        from: 'user_trails.userId',
                         to: 'user_trails.trailId'
                     },
                     to: 'trail.trail_id'

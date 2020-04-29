@@ -24,7 +24,8 @@ app.use(cors({
 }));
 
 app.use(authMiddleware.checkTokenSetUser);
-app.use('/users',  authMiddleware.isLoggedIn, users);
+// ,  authMiddleware.isLoggedIn
+app.use('/users', users);
 app.use('/trails', trails);
 app.use('/user_trails', userTrails);
 app.use('/auth', auth);

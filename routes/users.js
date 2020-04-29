@@ -10,8 +10,9 @@ router.get('/', async (req, res) => {
 });
 
 //route we want to protect for users
-router.get('/:id', authMiddleware.allowAccess, (req, res) => {
-  if(!isNaN(req.params.id)) {
+router.get('/:id',  (req, res) => {
+  console.log(req.params.id)
+  if(req.params.id) {
     User.getUserById(req.params.id).then(user => {
       if (user) {
         delete user.password
@@ -41,6 +42,7 @@ router.delete('/:id', (req, res) => {
     resError(res, 500, 'Invalid ID')
   }
 })
+
 // router.get('/:id/mytrails', authMiddleware.allowAccess, (req, res) => {
 //   if(!isNaN(req.params.id)) {
 //     User.getUserById(req.params.id).then(user => {

@@ -2,6 +2,7 @@ const knex = require('./knex')
 const User = require('../models/User')
 // const Trail = require('../models/Trail')
 const UserTrails = require('../models/UserTrails')
+const Trail = require('../models/User')
 
 module.exports = {
     getUsers: () =>  User.query().withGraphFetched('trails'),
@@ -23,9 +24,13 @@ module.exports = {
         .first()
         .withGraphFetched('trails'),
     
-    addUserTrails: (user_trails) => UserTrails
-        .query()
-        .insert(user_trails, 'id')
-        .then(user_trails => user_trails.id),
+    addUserTrails: (userTrail) => User
+        .relatedQuery('user_trails')
+        .for(userTrail.userId)
+        .insertGraph({ trails: userTrail })
 
 }
+
+// const fluffy = await Person.relatedQuery('pets')
+//   .for(1)
+//   .insert({ name: 'Fluffy' });

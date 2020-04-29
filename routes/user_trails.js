@@ -2,33 +2,42 @@ const express = require('express');
 const UserTrails = require('../db/user_trails')
 const router = express.Router();
 const authMiddleware = require('../routes/middleware')
+const User = require('../db/user')
+const Trail = require('../db/trail')
 
 
-router.get('/', (req, res) => {
-    UserTrails.getUserTrails().then(users => {
-      res.json({data:users});
-    })
-});
-
-router.get('/:email', (req, res) => {
-    UserTrails.getUserTrailsByEmail(req.params.email).then(trails => {
-      res.json({data:user_trails})
+router.get('/:id', (req, res) => {
+    UserTrails.getUserTrailsByUserId(req.params.id).then(trails => {
+      res.json({data:trails})
     })
 })
 
-router.post('/:id',  authMiddleware.allowAccess, (req, res) => {
-  // console.log('body', req.body)
-  // console.log('params', req.params)
+router.post('/:id',  (req, res) => {
     UserTrails.addUserTrails(req.body)
-      .then(user_trail => {
-          res.json({data:user_trail})
-      })
+      if (res.statusCode === 200) {
+        res.json({ message: 'success' })
+      } else {
+        new Error('Action Failed')
+      }
 })
 
 router.delete('/:id', (req, res) => {
-  console.log(req.params)
-    UserTrails.deleteUserTrails(req.params.id)
-      .then(res.json({message: 'deleted'}))
+    User.getUserById(req.params.id).then(user => {
+      if (user) {
+        user.trails.map(trail => {
+          if (trail.trail_id === req.body.trailId) {
+            UserTrails.deleteUserTrails(req.body.trailId).then(trail => {
+              res.json({ message: 'Deleted'})
+            })
+            
+          } else {
+            new Error('Trail does not exist')
+          }
+        })
+      }
+    })
+    
 })
+
 
 module.exports = router;

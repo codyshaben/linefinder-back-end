@@ -16,9 +16,9 @@ class Trail extends Model {
                     from: 'trail.trail_id',
                     through: {
                         from: 'user_trails.trailId',
-                        to: 'user_trails.userEmail'
+                        to: 'user_trails.userId'
                     },
-                    to: 'user.email'
+                    to: 'user.id'
                 }
             }
         }
