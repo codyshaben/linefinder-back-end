@@ -14,30 +14,32 @@ router.get('/:id', (req, res) => {
 
 router.post('/:id',  (req, res) => {
     UserTrails.addUserTrails(req.body)
-      if (res.statusCode === 200) {
-        res.json({ message: 'success' })
-      } else {
-        new Error('Action Failed')
-      }
+        if (res.statusCode === 200) {
+            res.json({ message: 'success' })
+        } else {
+            new Error('Action Failed')
+        }
 })
 
-router.delete('/:id', (req, res) => {
-    User.getUserById(req.params.id).then(user => {
-      if (user) {
-        user.trails.map(trail => {
-          if (trail.trail_id === req.body.trailId) {
-            UserTrails.deleteUserTrails(req.body.trailId).then(trail => {
-              res.json({ message: 'Deleted'})
-            })
-            
-          } else {
-            new Error('Trail does not exist')
-          }
+router.delete('/:id/:user_trail', (req, res, next) => {
+    const userTrailId = req.params.user_trail
+
+    const findTrail = (trails) => {
+        trails.find(trail => {
+            if (trail.trail_id == userTrailId) {
+                UserTrails.deleteUserTrails(trail.trail_id)
+                .then(res.json({ message: 'success'}))
+            } else {
+            next(new Error('Trail not found'))
+            }
         })
-      }
-    })
-    
-})
+    }
 
+    User
+        .getUserById(req.params.id)
+        .then(user => {
+          findTrail(user.trails)
+        })      
+})
 
 module.exports = router;

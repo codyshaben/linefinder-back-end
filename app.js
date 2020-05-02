@@ -20,14 +20,13 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3001',
+  origin: 'https://linefinder-90ef0.firebaseapp.com',
 }));
 
 app.use(authMiddleware.checkTokenSetUser);
-// ,  authMiddleware.isLoggedIn
-app.use('/users', users);
+app.use('/users', authMiddleware.isLoggedIn, users);
 app.use('/trails', trails);
-app.use('/user_trails', userTrails);
+app.use('/user_trails', authMiddleware.isLoggedIn, userTrails);
 app.use('/auth', auth);
 app.use('/twilio', twilio);
 
