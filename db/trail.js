@@ -1,6 +1,6 @@
 const knex = require('../db/knex')
-const User = require('../models/User')
-const Trail = require('../models/Trail')
+const User = require('../models/user')
+const Trail = require('../models/trail')
 
 module.exports = {
   

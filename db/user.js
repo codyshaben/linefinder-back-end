@@ -1,8 +1,5 @@
 const knex = require('./knex')
-const User = require('../models/User')
-// const Trail = require('../models/Trail')
-const UserTrails = require('../models/UserTrails')
-const Trail = require('../models/User')
+const User = require('../models/user')
 
 module.exports = {
     getUsers: () =>  User.query().withGraphFetched('trails'),

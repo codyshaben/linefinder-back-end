@@ -1,5 +1,5 @@
 const knex = require('./knex')
-const UserTrails = require('../models/UserTrails')
+const UserTrails = require('../models/user_trails')
 
 
 module.exports = {

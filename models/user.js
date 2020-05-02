@@ -4,7 +4,7 @@ class User extends Model {
     static tableName = 'user'
 
     static get relationMappings() {
-        const Trail = require('./Trail')
+        const Trail = require('./trail')
 
         return {
             trails: {
