@@ -63,7 +63,6 @@ router.post('/login', (req, res, next) => {
                 if(user) {
                     bcrypt.compare(req.body.password, user.password)
                         .then((result) => {
-                            //if passwords match
                             if (result ===  true) {
                                 jwt.sign({
                                     id: user.id

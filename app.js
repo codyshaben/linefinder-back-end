@@ -12,6 +12,8 @@ const auth = require('./routes/auth');
 const userTrails = require('./routes/user_trails');
 const authMiddleware = require('./routes/middleware');
 const twilio = require('./routes/twilio');
+const developmentUrl = 'https://localhost:3000'
+const productionUrl = 'https://linefinder-90ef0.firebaseapp.com'
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -20,7 +22,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   credentials: true,
-  origin: 'https://linefinder-90ef0.firebaseapp.com',
+  origin: process.env.NODE_ENV === 'development' ? developmentUrl : productionUrl,
 }));
 
 app.use(authMiddleware.checkTokenSetUser);
