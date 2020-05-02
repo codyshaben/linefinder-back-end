@@ -3,7 +3,6 @@ require('dotenv').config()
 
 const checkTokenSetUser = (req, res, next) => {
    const tokenHeader = req.get('Authorization');
-   console.log('tokenheader', tokenHeader)
    if (tokenHeader) {
        const token = tokenHeader.split(' ')[1]
        jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
@@ -29,7 +28,6 @@ const isLoggedIn = (req, res, next) => {
 }
 
 const allowAccess = (req, res, next) => {
-    console.log('request', req.user)
     if (req.user.id == req.params.id) {
         next()
     } else {

@@ -11,7 +11,6 @@ router.get('/', async (req, res) => {
 
 //route we want to protect for users
 router.get('/:id',  (req, res) => {
-  console.log(req.params.id)
   if(req.params.id) {
     User.getUserById(req.params.id).then(user => {
       if (user) {
@@ -28,7 +27,6 @@ router.get('/:id',  (req, res) => {
 
 // , authMiddleware.allowAccess
 router.delete('/:id', (req, res) => {
-  // console.log(req.params)
   if(!isNaN(req.params.id)) {
     User.getUserById(req.params.id).then(user => {
       if (user) {
@@ -42,21 +40,6 @@ router.delete('/:id', (req, res) => {
     resError(res, 500, 'Invalid ID')
   }
 })
-
-// router.get('/:id/mytrails', authMiddleware.allowAccess, (req, res) => {
-//   if(!isNaN(req.params.id)) {
-//     User.getUserById(req.params.id).then(user => {
-//       if (user) {
-//         delete user.password
-//         res.json({data:user.trails});
-//       } else {
-//         resError(res, 404, 'User not found')
-//       }
-//     })
-//   } else {
-//     resError(res, 500, 'Invalid ID')
-//   }
-// });
 
 const resError = (res, statusCode, message) => {
   res.status(statusCode)

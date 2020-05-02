@@ -12,7 +12,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.post('/:id',  (req, res) => {
+router.post('/:id', authMiddleware.isLoggedIn, (req, res) => {
     UserTrails.addUserTrails(req.body)
         if (res.statusCode === 200) {
             res.json({ message: 'success' })
@@ -21,7 +21,7 @@ router.post('/:id',  (req, res) => {
         }
 })
 
-router.delete('/:id/:user_trail', (req, res, next) => {
+router.delete('/:id/:user_trail', authMiddleware.isLoggedIn, (req, res, next) => {
     const userTrailId = req.params.user_trail
 
     const findTrail = (trails) => {
