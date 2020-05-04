@@ -20,7 +20,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
   credentials: true,
-  origin: 'https://linefinder-90ef0.firebaseapp.com',
+  origin: 'http://localhost:3000',
 }));
 
 app.use(authMiddleware.checkTokenSetUser);
