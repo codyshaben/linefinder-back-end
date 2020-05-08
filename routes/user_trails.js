@@ -26,8 +26,7 @@ router.delete('/:id/:user_trail', authMiddleware.isLoggedIn, (req, res, next) =>
         trails.find(trail => {
             if (trail.trail_id == userTrailId) {
                 UserTrails.deleteUserTrails(trail.trail_id)
-                .then(res.json({ message: 'success'} ))
-                .then(res.json(UserTrails.getUserTrailsByUserId(req.params.id)))
+                .then(res.json({ message: 'success', trails: UserTrails.getUserTrailsByUserId(req.params.id)} ))
             } else {
             next(new Error('Trail not found'))
             };
