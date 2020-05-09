@@ -1,6 +1,5 @@
-const knex = require('../db/knex')
-const User = require('../models/user')
-const Trail = require('../models/trail')
+const knex = require('../db/knex');
+const Trail = require('../models/trail');
 
 module.exports = {
   
@@ -35,5 +34,4 @@ module.exports = {
   getBlueTrails: () => Trail.query().where('difficulty', 'blue'),
 
   getGreenTrails: () => Trail.query().where('difficulty', 'green'),
-
-}
+};

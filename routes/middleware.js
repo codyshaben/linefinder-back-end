@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const checkTokenSetUser = (req, res, next) => {
    const tokenHeader = req.get('Authorization');
@@ -7,37 +7,37 @@ const checkTokenSetUser = (req, res, next) => {
        const token = tokenHeader.split(' ')[1]
        jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
            if (err) {
-               next()
+               next();
            } else {
-               req.user = decoded
-               next()
-           }
-       })
+               req.user = decoded;
+               next();
+           };
+       });
    } else {
-       next()
-   }
-}
+       next();
+   };
+};
 
 const isLoggedIn = (req, res, next) => {
     if(req.user) {
-        next()
+        next();
     } else {
-        res.status(401)
-        next(new Error('Un-Authorized'))
-    }
-}
+        res.status(401);
+        next(new Error('Un-Authorized'));
+    };
+};
 
 const allowAccess = (req, res, next) => {
     if (req.user.id == req.params.id) {
-        next()
+        next();
     } else {
-        res.status(401)
-        next(new Error('Un-Authorized'))
-    }
-}
+        res.status(401);
+        next(new Error('Un-Authorized'));
+    };
+};
 
 module.exports = {
     checkTokenSetUser,
     isLoggedIn,
     allowAccess
-}
+};

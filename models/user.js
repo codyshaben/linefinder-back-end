@@ -1,10 +1,10 @@
-const { Model } = require('objection')
+const { Model } = require('objection');
 
 class User extends Model {
-    static tableName = 'user'
+    static tableName = 'user';
 
     static get relationMappings() {
-        const Trail = require('./trail')
+        const Trail = require('./trail');
 
         return {
             trails: {
@@ -19,8 +19,8 @@ class User extends Model {
                     to: 'trail.trail_id'
                 }
             }
-        }   
-    }
-}
+        };
+    };
+};
 
-module.exports = User 
+module.exports = User;

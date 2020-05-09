@@ -1,5 +1,5 @@
-const knex = require('./knex')
-const User = require('../models/user')
+const knex = require('./knex');
+const User = require('../models/user');
 
 module.exports = {
     getUsers: () =>  User.query().withGraphFetched('trails'),
@@ -25,9 +25,4 @@ module.exports = {
         .relatedQuery('user_trails')
         .for(userTrail.userId)
         .insertGraph({ trails: userTrail })
-
-}
-
-// const fluffy = await Person.relatedQuery('pets')
-//   .for(1)
-//   .insert({ name: 'Fluffy' });
+};

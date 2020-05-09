@@ -1,6 +1,5 @@
-const knex = require('./knex')
-const UserTrails = require('../models/user_trails')
-
+const knex = require('./knex');
+const UserTrails = require('../models/user_trails');
 
 module.exports = {
     getUserTrails: () => UserTrails.query(),
@@ -18,4 +17,4 @@ module.exports = {
         .query()
         .delete()
         .where('trailId', id)
-}
+};
