@@ -25,7 +25,7 @@
     "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.9",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "morgan": "^1.9.1",
     "node-fetch": "^2.6.0",
     "objection": "^2.1.3",
